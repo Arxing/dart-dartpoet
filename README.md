@@ -78,7 +78,7 @@ main() {
 
 ## Output
 
-The sample code generate a file at [./example/example_output.dart]()
+The sample code generate a file at [./example/example_output.dart](https://github.com/Arxing/dart-dartpoet/blob/master/example/example_output.dart)
 
 ```dart
 
@@ -114,4 +114,4 @@ globalFunc1(int param1)  => print('hello world!');
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: http://example.com/issues/replaceme
+[tracker]: https://github.com/Arxing/dart-dartpoet/issues
