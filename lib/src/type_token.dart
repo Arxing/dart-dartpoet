@@ -50,6 +50,13 @@ class TypeToken {
   bool get isList => RegExp('List(<.+>)?').hasMatch(typeName);
 
   bool get isMap => RegExp('Map(<.+, .+>)?').hasMatch(typeName);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is TypeToken && runtimeType == other.runtimeType && _typeName == other._typeName;
+
+  @override
+  int get hashCode => _typeName.hashCode;
 }
 
 bool isPrimitive(Type type) => TypeToken.of(type).isPrimitive;
