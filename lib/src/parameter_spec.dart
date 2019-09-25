@@ -9,6 +9,7 @@ class ParameterSpec<T> implements Spec {
   bool isSelfParameter = false;
   bool isValue = false;
   dynamic value;
+  bool valueString = true;
 
   ParameterSpec.build(
     this.parameterName, {
@@ -19,9 +20,11 @@ class ParameterSpec<T> implements Spec {
     this.isSelfParameter = false,
     this.isValue,
     this.value,
+    this.valueString,
   }) {
     if (metas == null) metas = [];
     this.isValue = isValue ?? false;
+    this.valueString = valueString ?? true;
   }
 
   ParameterSpec.normal(
@@ -31,6 +34,7 @@ class ParameterSpec<T> implements Spec {
     List<MetaSpec> metas,
     bool isValue,
     dynamic value,
+    bool valueString,
   }) : this.build(
           parameterName,
           type: type,
@@ -39,6 +43,7 @@ class ParameterSpec<T> implements Spec {
           isSelfParameter: isSelfParameter,
           isValue: isValue,
           value: value,
+          valueString: valueString,
         );
 
   ParameterSpec.named(
@@ -49,6 +54,7 @@ class ParameterSpec<T> implements Spec {
     List<MetaSpec> metas,
     bool isValue,
     dynamic value,
+    bool valueString,
   }) : this.build(
           parameterName,
           type: type,
@@ -58,6 +64,7 @@ class ParameterSpec<T> implements Spec {
           isSelfParameter: isSelfParameter,
           isValue: isValue,
           value: value,
+          valueString: valueString,
         );
 
   ParameterSpec.indexed(
@@ -68,6 +75,7 @@ class ParameterSpec<T> implements Spec {
     List<MetaSpec> metas,
     bool isValue,
     dynamic value,
+    bool valueString,
   }) : this.build(
           parameterName,
           type: type,
@@ -77,13 +85,14 @@ class ParameterSpec<T> implements Spec {
           isSelfParameter: isSelfParameter,
           isValue: isValue,
           value: value,
+          valueString: valueString,
         );
 
   String _getType() {
     return type == null ? 'dynamic' : type.typeName;
   }
 
-  String _valueString(dynamic v) => v is String ? '"$v"' : "$v";
+  String _valueString(dynamic v) => v is String && valueString ? '"$v"' : "$v";
 
   @override
   String code({Map<String, dynamic> args = const {}}) {
