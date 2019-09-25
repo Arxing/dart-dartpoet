@@ -29,10 +29,8 @@ class CodeBlockSpec implements Spec {
       return ' => ${statements.single}';
     } else {
       String tmp = statements.join("\n");
-      if (withBlock)
-        return '{\n$tmp\n}';
-      else
-        return tmp;
+      if (withBlock) tmp = '{\n$tmp\n}';
+      return tmp;
     }
   }
 }

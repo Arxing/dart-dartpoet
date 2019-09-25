@@ -23,7 +23,8 @@ class ClassSpec implements Spec {
 
   List<TypeToken> mixinClasses = [];
 
-  ClassSpec.build(this.className, {
+  ClassSpec.build(
+    this.className, {
     this.doc,
     this.metas,
     this.properties,

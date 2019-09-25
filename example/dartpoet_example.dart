@@ -39,7 +39,14 @@ main() {
       ),
       ClassSpec.build(
         'HelloWorld',
-        metas: [MetaSpec.of('Object()')],
+        metas: [
+          MetaSpec.ofConstructor(TypeToken.ofName("Object")),
+          MetaSpec.ofInstance("deprecated"),
+          MetaSpec.ofConstructor(TypeToken.ofName("JsonKey"), parameters: [
+            ParameterSpec.named("ignored", isValue: true, value: false),
+            ParameterSpec.normal("p1", isValue: true, value: "aa1234"),
+          ]),
+        ],
         doc: DocSpec.text('hello! world!.'),
         superClass: TypeToken.of(Object),
         methods: [

@@ -14,10 +14,15 @@ export 'src/parameter_spec.dart';
 export 'src/type_token.dart';
 export 'src/property_spec.dart';
 export 'src/dart_file.dart';
-export 'src/dart_formatter.dart';
 export 'src/spec.dart';
+
+import 'package:dart_style/dart_style.dart';
 
 const String KEY_WITH_BLOCK = 'with_block';
 const String KEY_WITH_LAMBDA = 'with_lambda';
 const String KEY_WITH_DEF_VALUE = 'with_def_value';
 const String KEY_REVERSE_CLASSES = 'reverse_classes';
+
+DartFormatter _formatter = DartFormatter();
+
+String format(String source) => _formatter.format(source);

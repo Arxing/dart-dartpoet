@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 /// this is a student class
@@ -11,18 +10,18 @@ class Student {
 
 /// hello! world!.
 @Object()
+@deprecated
+@JsonKey("aa1234", ignored: false)
 class HelloWorld extends Object {
-  List<Student> students=[];
-  Map<String, int> studentScores={"John":100,"Rek":50};
+  List<Student> students = [];
+  Map<String, int> studentScores = {"John": 100, "Rek": 50};
   bool run;
 
-  int get studentCount  => students.length;
+  int get studentCount => students.length;
 
   set newStudent(Student student) => students.add(student);
 
-  sayHello()  => print('hello');
+  sayHello() => print('hello');
 }
 
-
-globalFunc1(int param1)  => print('hello world!');
-
+globalFunc1(int param1) => print('hello world!');
