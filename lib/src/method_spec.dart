@@ -9,6 +9,8 @@ class MethodSpec implements Spec {
   CodeBlockSpec codeBlock;
   bool isStatic;
   bool isFactory;
+  List<TypeToken> generics = [];
+  bool get hasGeneric => generics.isNotEmpty;
 
   MethodSpec.build(
     this.methodName, {
@@ -19,6 +21,7 @@ class MethodSpec implements Spec {
     this.codeBlock,
     this.isStatic = false,
     this.isFactory = false,
+    this.generics,
   }) {
     if (metas == null) metas = [];
     if (parameters == null) parameters = [];
@@ -32,6 +35,7 @@ class MethodSpec implements Spec {
     if (isStatic) elements.add('static');
     if (returnType != null) elements.add(returnType.typeName);
     elements.add(methodName);
+    if (hasGeneric) elements.add("<${generics.join(", ")}>");
     raw += elements.join(' ');
     raw += '(${collectParameters(parameters)})';
     raw += ' ' + collectCodeBlock(codeBlock, withLambda: true);

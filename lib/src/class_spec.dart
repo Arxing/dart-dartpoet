@@ -23,6 +23,10 @@ class ClassSpec implements Spec {
 
   List<TypeToken> mixinClasses = [];
 
+  List<TypeToken> generics = [];
+
+  bool get hasGeneric => generics.isNotEmpty;
+
   ClassSpec.build(
     this.className, {
     this.doc,
@@ -34,6 +38,7 @@ class ClassSpec implements Spec {
     this.superClass,
     this.implementClasses,
     this.mixinClasses,
+    this.generics,
     Iterable<ConstructorSpec> Function(ClassSpec owner) constructorBuilder,
   }) {
     if (constructorBuilder != null) constructors.addAll(constructorBuilder(this));
@@ -44,12 +49,14 @@ class ClassSpec implements Spec {
     if (methods == null) methods = [];
     if (implementClasses == null) implementClasses = [];
     if (mixinClasses == null) mixinClasses = [];
+    if (generics == null) generics = [];
   }
 
   @override
   String code({Map<String, dynamic> args = const {}}) {
     StringBuffer inner = StringBuffer();
     inner.write('class $className');
+    if (hasGeneric) inner.write("<${generics.join(", ")}>");
     if (superClass != null) inner.write(' extends ${superClass.typeName}');
     if (implementClasses.isNotEmpty) inner.write(' implements ${implementClasses.map((o) => o.typeName).join(', ')}');
     if (mixinClasses.isNotEmpty) inner.write(' with ${mixinClasses.map((o) => o.typeName).join(', ')}');
@@ -95,7 +102,8 @@ class ConstructorSpec implements Spec {
 
 //todo initializer list
 
-  ConstructorSpec.build(this.owner, {
+  ConstructorSpec.build(
+    this.owner, {
     this.doc,
     this.mode,
     this.parameters,
@@ -106,65 +114,69 @@ class ConstructorSpec implements Spec {
     if (parameters == null) parameters = [];
   }
 
-  ConstructorSpec.normal(ClassSpec owner, {
+  ConstructorSpec.normal(
+    ClassSpec owner, {
     List<ParameterSpec> parameters = const [],
     CodeBlockSpec codeBlock,
     String inherit,
     DocSpec doc,
   }) : this.build(
-    owner,
-    parameters: parameters,
-    codeBlock: codeBlock,
-    inherit: inherit,
-    mode: ConstructorMode.normal,
-    doc: doc,
-  );
+          owner,
+          parameters: parameters,
+          codeBlock: codeBlock,
+          inherit: inherit,
+          mode: ConstructorMode.normal,
+          doc: doc,
+        );
 
-  ConstructorSpec.named(ClassSpec owner,
-      String name, {
-        List<ParameterSpec> parameters = const [],
-        CodeBlockSpec codeBlock,
-        String inherit,
-        DocSpec doc,
-      }) : this.build(
-    owner,
-    parameters: parameters,
-    codeBlock: codeBlock,
-    inherit: inherit,
-    mode: ConstructorMode.named,
-    name: name,
-    doc: doc,
-  );
-
-  ConstructorSpec.factory(ClassSpec owner, {
+  ConstructorSpec.named(
+    ClassSpec owner,
+    String name, {
     List<ParameterSpec> parameters = const [],
     CodeBlockSpec codeBlock,
     String inherit,
     DocSpec doc,
   }) : this.build(
-    owner,
-    parameters: parameters,
-    codeBlock: codeBlock,
-    inherit: inherit,
-    mode: ConstructorMode.factory,
-    doc: doc,
-  );
+          owner,
+          parameters: parameters,
+          codeBlock: codeBlock,
+          inherit: inherit,
+          mode: ConstructorMode.named,
+          name: name,
+          doc: doc,
+        );
 
-  ConstructorSpec.namedFactory(ClassSpec owner,
-      String name, {
-        List<ParameterSpec> parameters = const [],
-        CodeBlockSpec codeBlock,
-        String inherit,
-        DocSpec doc,
-      }) : this.build(
-    owner,
-    parameters: parameters,
-    codeBlock: codeBlock,
-    inherit: inherit,
-    mode: ConstructorMode.namedFactory,
-    doc: doc,
-    name: name,
-  );
+  ConstructorSpec.factory(
+    ClassSpec owner, {
+    List<ParameterSpec> parameters = const [],
+    CodeBlockSpec codeBlock,
+    String inherit,
+    DocSpec doc,
+  }) : this.build(
+          owner,
+          parameters: parameters,
+          codeBlock: codeBlock,
+          inherit: inherit,
+          mode: ConstructorMode.factory,
+          doc: doc,
+        );
+
+  ConstructorSpec.namedFactory(
+    ClassSpec owner,
+    String name, {
+    List<ParameterSpec> parameters = const [],
+    CodeBlockSpec codeBlock,
+    String inherit,
+    DocSpec doc,
+  }) : this.build(
+          owner,
+          parameters: parameters,
+          codeBlock: codeBlock,
+          inherit: inherit,
+          mode: ConstructorMode.namedFactory,
+          doc: doc,
+          name: name,
+        );
 
   String get _constructorName => owner.className;
 
