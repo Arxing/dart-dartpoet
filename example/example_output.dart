@@ -11,7 +11,6 @@ class Student {
 /// hello! world!.
 @Object()
 @deprecated
-@JsonKey("aa1234", ignored: false)
 class HelloWorld extends Object {
   List<Student> students = [];
   Map<String, int> studentScores = {"John": 100, "Rek": 50};
