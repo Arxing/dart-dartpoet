@@ -23,3 +23,7 @@
 - New constructor of `MetaSpec`
     + `MetaSpec.ofInstance(String instanceName)`
     + `MetaSpec.ofConstructor(TypeToken type, {List<ParameterSpec> parameters})`
+    
+## 1.0.4
+
+- support generic type
