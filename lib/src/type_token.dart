@@ -29,6 +29,8 @@ class TypeToken {
 
   factory TypeToken.ofBool() => TypeToken.of(bool);
 
+  factory TypeToken.ofVoid() => TypeToken.ofName("void");
+
   static TypeToken ofListByToken(TypeToken componentType) {
     return TypeToken.ofName('List', [componentType]);
   }
@@ -55,6 +57,8 @@ class TypeToken {
 
   String get typeName => _typeName;
 
+  String get fullTypeName => typeName + (generics.isNotEmpty ? "<${generics.join(", ")}>" : "");
+
   bool get isPrimitive => ['int', 'double', 'bool', 'String'].contains(typeName);
 
   bool get isNotPrimitive => !isPrimitive;
@@ -73,6 +77,8 @@ class TypeToken {
 
   bool get isDynamic => typeName == "dynamic";
 
+  bool get isVoid => typeName == "void";
+
   List<TypeToken> get generics => _generics;
 
   TypeToken get firstGeneric => generics.first;
@@ -85,9 +91,7 @@ class TypeToken {
   int get hashCode => _typeName.hashCode;
 
   @override
-  String toString() {
-    return typeName + (generics.isNotEmpty ? "<${generics.join(", ")}>" : "");
-  }
+  String toString() => fullTypeName;
 }
 
 bool isPrimitive(Type type) => TypeToken.of(type).isPrimitive;

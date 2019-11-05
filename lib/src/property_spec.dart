@@ -130,7 +130,7 @@ class PropertySpec implements Spec {
   }
 
   String _getType() {
-    return type == null ? 'dynamic' : type.typeName;
+    return type == null ? 'dynamic' : type.fullTypeName;
   }
 
   String _formatValue(dynamic val) {

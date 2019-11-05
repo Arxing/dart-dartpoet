@@ -1,6 +1,6 @@
 name: dartpoet
 description: You can use this library to programmatically generate dart file. Like Javapoet.
-version: 1.0.4
+version: 1.0.5
 homepage: https://github.com/Arxing/dart-dartpoet
 author: Arxing <meiswind711108@gmail.com>
 pubpage: https://pub.dev/packages/dartpoet

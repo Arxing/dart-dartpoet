@@ -33,7 +33,7 @@ class MethodSpec implements Spec {
     var elements = [];
     if (isFactory) elements.add('factory');
     if (isStatic) elements.add('static');
-    if (returnType != null) elements.add(returnType.typeName);
+    if (returnType != null) elements.add(returnType.fullTypeName);
     elements.add(methodName);
     if (hasGeneric) elements.add("<${generics.join(", ")}>");
     raw += elements.join(' ');

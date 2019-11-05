@@ -24,7 +24,7 @@ class MetaSpec implements Spec {
     } else {
       var list = parameters.where((o) => o.isValue).toList();
       list.sort((o1, o2) => o1.parameterMode.index - o2.parameterMode.index);
-      return "@${typeToken.typeName}(${list.map((o) => o.code()).join(", ")})";
+      return "@${typeToken.fullTypeName}(${list.map((o) => o.code()).join(", ")})";
     }
   }
 }

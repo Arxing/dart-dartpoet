@@ -27,3 +27,15 @@
 ## 1.0.4
 
 - support generic type
+
+## 1.0.4+1
+
+- bug fixed
+
+## 1.0.4+2
+
+- bug fixed
+
+## 1.0.5
+
+- support operator method

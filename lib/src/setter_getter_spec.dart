@@ -19,7 +19,7 @@ class GetterSpec implements Spec {
     if (type == null) {
       raw += 'get $getterName ${collectCodeBlock(codeBlock)}';
     } else {
-      raw += '${type.typeName} get $getterName ${collectCodeBlock(codeBlock)}';
+      raw += '${type.fullTypeName} get $getterName ${collectCodeBlock(codeBlock)}';
     }
     raw = collectWithDoc(doc, raw);
     return raw;

@@ -89,7 +89,7 @@ class ParameterSpec<T> implements Spec {
         );
 
   String _getType() {
-    return type == null ? 'dynamic' : type.typeName;
+    return type == null ? 'dynamic' : type.fullTypeName;
   }
 
   String _valueString(dynamic v) => v is String && valueString ? '"$v"' : "$v";

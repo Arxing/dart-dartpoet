@@ -56,10 +56,10 @@ class ClassSpec implements Spec {
   String code({Map<String, dynamic> args = const {}}) {
     StringBuffer inner = StringBuffer();
     inner.write('class $className');
-    if (hasGeneric) inner.write("<${generics.join(", ")}>");
-    if (superClass != null) inner.write(' extends ${superClass.typeName}');
-    if (implementClasses.isNotEmpty) inner.write(' implements ${implementClasses.map((o) => o.typeName).join(', ')}');
-    if (mixinClasses.isNotEmpty) inner.write(' with ${mixinClasses.map((o) => o.typeName).join(', ')}');
+    if (hasGeneric) inner.write("<${generics.map((o) => o.fullTypeName).join(", ")}>");
+    if (superClass != null) inner.write(' extends ${superClass}');
+    if (implementClasses.isNotEmpty) inner.write(' implements ${implementClasses.map((o) => o).join(', ')}');
+    if (mixinClasses.isNotEmpty) inner.write(' with ${mixinClasses.join(', ')}');
     inner.writeln(' {');
     var blocks = [];
     String constructorsBlock = collectConstructors(constructors);
