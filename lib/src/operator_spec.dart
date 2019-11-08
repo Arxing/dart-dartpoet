@@ -10,6 +10,10 @@ class OperatorSpec implements Spec {
 
   @override
   String code({Map<String, dynamic> args = const {}}) {
-    return "${returnType.fullTypeName} operator(${collectParameters(parameters)})${collectCodeBlock(codeBlock)}";
+    return "${returnType.fullTypeName} operator $operator(${collectParameters(parameters)})${collectCodeBlock(codeBlock)}";
   }
+}
+
+String collectOperatorMethods(List<OperatorSpec> operators) {
+  return operators.map((o) => o.code()).join("\n\n");
 }

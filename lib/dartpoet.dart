@@ -17,7 +17,7 @@ export 'src/parameter_spec.dart';
 export 'src/property_spec.dart';
 export 'src/setter_getter_spec.dart';
 export 'src/spec.dart';
-export 'src/type_token.dart';
+export 'package:type_token/type_token.dart';
 
 const String KEY_WITH_BLOCK = 'with_block';
 const String KEY_WITH_LAMBDA = 'with_lambda';

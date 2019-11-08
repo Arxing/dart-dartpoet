@@ -39,3 +39,11 @@
 ## 1.0.5
 
 - support operator method
+
+## 1.0.5+4
+
+- fix bugs of dependencies
+
+## 1.0.6
+
+- detach `TypeToken` to a independent library

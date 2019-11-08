@@ -25,6 +25,7 @@ class MethodSpec implements Spec {
   }) {
     if (metas == null) metas = [];
     if (parameters == null) parameters = [];
+    if (generics == null) generics = [];
   }
 
   @override

@@ -15,6 +15,8 @@ class ClassSpec implements Spec {
 
   List<PropertySpec> properties = [];
 
+  List<OperatorSpec> operatorMethods = [];
+
   String className;
 
   TypeToken superClass;
@@ -39,6 +41,7 @@ class ClassSpec implements Spec {
     this.implementClasses,
     this.mixinClasses,
     this.generics,
+    this.operatorMethods,
     Iterable<ConstructorSpec> Function(ClassSpec owner) constructorBuilder,
   }) {
     if (constructorBuilder != null) constructors.addAll(constructorBuilder(this));
@@ -50,6 +53,7 @@ class ClassSpec implements Spec {
     if (implementClasses == null) implementClasses = [];
     if (mixinClasses == null) mixinClasses = [];
     if (generics == null) generics = [];
+    if (operatorMethods == null) operatorMethods = [];
   }
 
   @override
@@ -67,11 +71,13 @@ class ClassSpec implements Spec {
     String settersBlock = collectSetters(setters);
     String methodsBlock = collectMethods(methods);
     String propertiesBlock = collectProperties(properties);
+    String operatorsBlock = collectOperatorMethods(operatorMethods);
     if (propertiesBlock.isNotEmpty) blocks.add(propertiesBlock);
     if (constructorsBlock.isNotEmpty) blocks.add(constructorsBlock);
     if (gettersBlock.isNotEmpty) blocks.add(gettersBlock);
     if (settersBlock.isNotEmpty) blocks.add(settersBlock);
     if (methodsBlock.isNotEmpty) blocks.add(methodsBlock);
+    if (operatorsBlock.isNotEmpty) blocks.add(operatorsBlock);
     inner.write(blocks.join('\n\n'));
     inner..writeln()..writeln('}');
     String raw = inner.toString();

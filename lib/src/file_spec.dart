@@ -64,7 +64,9 @@ class DependencySpec implements Spec {
 
   DependencySpec.export(String route) : this.build(DependencyMode.export, route);
 
-  DependencySpec.part(String route) : this.build(DependencyMode.partOf, route);
+  DependencySpec.part(String route) : this.build(DependencyMode.part, route);
+
+  DependencySpec.partOf(String route) : this.build(DependencyMode.partOf, route);
 
   @override
   String code({Map<String, dynamic> args = const {}}) {
@@ -76,16 +78,20 @@ class DependencySpec implements Spec {
       case DependencyMode.export:
         raw += "export '$route';";
         break;
-      case DependencyMode.partOf:
+      case DependencyMode.part:
         raw += "part '$route';";
+        break;
+      case DependencyMode.partOf:
+        raw += "part of '$route";
         break;
     }
     return raw;
   }
 }
 
-enum DependencyMode { import, export, partOf }
+enum DependencyMode { import, export, part, partOf }
 
 String collectDependencies(List<DependencySpec> dependencies) {
+  dependencies.sort((o1, o2) => o1.mode.index - o2.mode.index);
   return dependencies.map((o) => o.code()).join('\n');
 }
