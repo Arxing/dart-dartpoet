@@ -1,10 +1,13 @@
-import 'package:dartpoet/dartpoet.dart';
+part of 'spec.dart';
 
 class MetaSpec implements Spec {
   TypeToken typeToken;
   List<ParameterSpec> parameters = [];
   String instanceName;
   bool isInstance = false;
+
+  @override
+  SpecKind get kind => SpecKind.META;
 
   MetaSpec.ofInstance(String instanceName) {
     this.instanceName = instanceName;
@@ -18,7 +21,7 @@ class MetaSpec implements Spec {
   }
 
   @override
-  String code({Map<String, dynamic> args = const {}}) {
+  String code([Map<String, dynamic> args = const {}]) {
     if (isInstance) {
       return "@$instanceName";
     } else {
@@ -27,13 +30,4 @@ class MetaSpec implements Spec {
       return "@${typeToken.fullTypeName}(${list.map((o) => o.code()).join(", ")})";
     }
   }
-}
-
-String collectMetas(List<MetaSpec> metas) {
-  return metas.map((o) => o.code()).join('\n');
-}
-
-String collectWithMeta(List<MetaSpec> metas, String raw) {
-  if (metas.isEmpty) return raw;
-  return '${collectMetas(metas)}\n$raw';
 }

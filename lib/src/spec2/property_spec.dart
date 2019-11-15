@@ -1,13 +1,14 @@
-import 'dart:convert';
-
-import 'package:dartpoet/dartpoet.dart';
+part of 'spec.dart';
 
 class PropertySpec implements Spec {
-  DocSpec doc;
+  DocumentSpec doc;
   TypeToken type;
   String name;
   dynamic defaultValue;
-  List<MetaSpec> metas = [];
+  List<AnnotationSpec> metas = [];
+
+  @override
+  SpecKind get kind => SpecKind.PROPERTY;
 
   PropertySpec.of(
     this.name, {
@@ -21,9 +22,9 @@ class PropertySpec implements Spec {
 
   PropertySpec.ofDynamic(
     String name, {
-    DocSpec doc,
+    DocumentSpec doc,
     dynamic defaultValue,
-    List<MetaSpec> metas,
+    List<AnnotationSpec> metas,
   }) : this.of(
           name,
           doc: doc,
@@ -34,9 +35,9 @@ class PropertySpec implements Spec {
 
   PropertySpec.ofString(
     String name, {
-    DocSpec doc,
+    DocumentSpec doc,
     String defaultValue,
-    List<MetaSpec> metas,
+    List<AnnotationSpec> metas,
   }) : this.of(
           name,
           doc: doc,
@@ -47,9 +48,9 @@ class PropertySpec implements Spec {
 
   PropertySpec.ofInt(
     String name, {
-    DocSpec doc,
+    DocumentSpec doc,
     int defaultValue,
-    List<MetaSpec> metas,
+    List<AnnotationSpec> metas,
   }) : this.of(
           name,
           doc: doc,
@@ -60,9 +61,9 @@ class PropertySpec implements Spec {
 
   PropertySpec.ofDouble(
     String name, {
-    DocSpec doc,
+    DocumentSpec doc,
     double defaultValue,
-    List<MetaSpec> metas,
+    List<AnnotationSpec> metas,
   }) : this.of(
           name,
           doc: doc,
@@ -73,9 +74,9 @@ class PropertySpec implements Spec {
 
   PropertySpec.ofBool(
     String name, {
-    DocSpec doc,
+    DocumentSpec doc,
     bool defaultValue,
-    List<MetaSpec> metas,
+    List<AnnotationSpec> metas,
   }) : this.of(
           name,
           doc: doc,
@@ -87,9 +88,9 @@ class PropertySpec implements Spec {
   static PropertySpec ofListByToken(
     String name, {
     TypeToken componentType,
-    DocSpec doc,
+    DocumentSpec doc,
     List defaultValue,
-    List<MetaSpec> metas,
+    List<AnnotationSpec> metas,
   }) {
     return PropertySpec.of(name,
         type: TypeToken.ofListByToken(componentType ?? TypeToken.ofDynamic()),
@@ -100,9 +101,9 @@ class PropertySpec implements Spec {
 
   static PropertySpec ofList<T>(
     String name, {
-    DocSpec doc,
+    DocumentSpec doc,
     List defaultValue,
-    List<MetaSpec> metas,
+    List<AnnotationSpec> metas,
   }) {
     return ofListByToken(name, doc: doc, defaultValue: defaultValue, metas: metas, componentType: TypeToken.of(T));
   }
@@ -111,9 +112,9 @@ class PropertySpec implements Spec {
     String name, {
     TypeToken keyType,
     TypeToken valueType,
-    DocSpec doc,
+    DocumentSpec doc,
     Map defaultValue,
-    List<MetaSpec> metas,
+    List<AnnotationSpec> metas,
   }) {
     return PropertySpec.of(name,
         type: TypeToken.ofMapByToken(keyType, valueType), metas: metas, doc: doc, defaultValue: defaultValue);
@@ -121,9 +122,9 @@ class PropertySpec implements Spec {
 
   static PropertySpec ofMap<K, V>(
     String name, {
-    DocSpec doc,
+    DocumentSpec doc,
     Map defaultValue,
-    List<MetaSpec> metas,
+    List<AnnotationSpec> metas,
   }) {
     return ofMapByToken(name,
         keyType: TypeToken.of(K), valueType: TypeToken.of(V), metas: metas, doc: doc, defaultValue: defaultValue);
@@ -141,17 +142,13 @@ class PropertySpec implements Spec {
   }
 
   @override
-  String code({Map<String, dynamic> args = const {}}) {
+  String code([Map<String, dynamic> args = const {}]) {
     bool withDefValue = args[KEY_WITH_DEF_VALUE] ?? false;
     String raw = '${_getType()} $name';
     if (withDefValue && defaultValue != null) raw += '=${_formatValue(defaultValue)}';
     raw += ';';
-    raw = collectWithMeta(metas, raw);
-    raw = collectWithDoc(doc, raw);
+    raw = _collectWithMeta(metas, raw);
+    raw = _collectWithDoc(doc, raw);
     return raw;
   }
-}
-
-String collectProperties(List<PropertySpec> properties) {
-  return properties.map((o) => o.code(args: {KEY_WITH_DEF_VALUE: true})).join('\n');
 }

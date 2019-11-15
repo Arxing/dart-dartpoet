@@ -1,15 +1,18 @@
-import 'package:dartpoet/dartpoet.dart';
+part of 'spec.dart';
 
 class ParameterSpec<T> implements Spec {
   TypeToken type;
   String parameterName;
   ParameterMode parameterMode;
   T defaultValue;
-  List<MetaSpec> metas = [];
+  List<AnnotationSpec> metas = [];
   bool isSelfParameter = false;
   bool isValue = false;
   dynamic value;
   bool valueString = true;
+
+  @override
+  SpecKind get kind => SpecKind.PARAMETER;
 
   ParameterSpec.build(
     this.parameterName, {
@@ -31,7 +34,7 @@ class ParameterSpec<T> implements Spec {
     String parameterName, {
     bool isSelfParameter = false,
     TypeToken type,
-    List<MetaSpec> metas,
+    List<AnnotationSpec> metas,
     bool isValue,
     dynamic value,
     bool valueString,
@@ -51,7 +54,7 @@ class ParameterSpec<T> implements Spec {
     bool isSelfParameter = false,
     TypeToken type,
     T defaultValue,
-    List<MetaSpec> metas,
+    List<AnnotationSpec> metas,
     bool isValue,
     dynamic value,
     bool valueString,
@@ -72,7 +75,7 @@ class ParameterSpec<T> implements Spec {
     bool isSelfParameter = false,
     TypeToken type,
     T defaultValue,
-    List<MetaSpec> metas,
+    List<AnnotationSpec> metas,
     bool isValue,
     dynamic value,
     bool valueString,
@@ -95,7 +98,7 @@ class ParameterSpec<T> implements Spec {
   String _valueString(dynamic v) => v is String && valueString ? '"$v"' : "$v";
 
   @override
-  String code({Map<String, dynamic> args = const {}}) {
+  String code([Map<String, dynamic> args = const {}]) {
     String raw;
     if (isValue) {
       raw = parameterMode == ParameterMode.named ? "$parameterName: ${_valueString(value)}" : "${_valueString(value)}";
@@ -106,18 +109,6 @@ class ParameterSpec<T> implements Spec {
     }
     return raw;
   }
-}
-
-String collectParameters(List<ParameterSpec> parameters) {
-  if (parameters == null || parameters.isEmpty) return '';
-  var normalList = parameters.where((o) => o.parameterMode == ParameterMode.normal);
-  var namedList = parameters.where((o) => o.parameterMode == ParameterMode.named);
-  var indexedList = parameters.where((o) => o.parameterMode == ParameterMode.indexed);
-  List<String> paramsList = [];
-  if (normalList.isNotEmpty) paramsList.add(normalList.map((o) => o.code()).join(", "));
-  if (namedList.isNotEmpty) paramsList.add('{' + namedList.map((o) => o.code(args: {KEY_WITH_DEF_VALUE: true})).join(", ") + '}');
-  if (indexedList.isNotEmpty) paramsList.add('[' + indexedList.map((o) => o.code(args: {KEY_WITH_DEF_VALUE: true})).join(", ") + ']');
-  return paramsList.join(", ");
 }
 
 enum ParameterMode { normal, indexed, named }

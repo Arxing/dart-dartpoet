@@ -1,4 +1,4 @@
-import 'package:dartpoet/dartpoet.dart';
+part of 'spec.dart';
 
 class MethodSpec implements Spec {
   DocSpec doc;
@@ -11,6 +11,9 @@ class MethodSpec implements Spec {
   bool isFactory;
   List<TypeToken> generics = [];
   bool get hasGeneric => generics.isNotEmpty;
+
+  @override
+  SpecKind get kind => SpecKind.METHOD;
 
   MethodSpec.build(
     this.methodName, {
@@ -29,7 +32,7 @@ class MethodSpec implements Spec {
   }
 
   @override
-  String code({Map<String, dynamic> args = const {}}) {
+  String code([Map<String, dynamic> args = const {}]) {
     String raw = '';
     var elements = [];
     if (isFactory) elements.add('factory');
@@ -38,14 +41,10 @@ class MethodSpec implements Spec {
     elements.add(methodName);
     if (hasGeneric) elements.add("<${generics.join(", ")}>");
     raw += elements.join(' ');
-    raw += '(${collectParameters(parameters)})';
-    raw += ' ' + collectCodeBlock(codeBlock, withLambda: true);
-    raw = collectWithMeta(metas, raw);
-    raw = collectWithDoc(doc, raw);
+    raw += '(${_collectParameters(parameters)})';
+    raw += ' ' + _collectCodeBlock(codeBlock, withLambda: true);
+    raw = _collectWithMeta(metas, raw);
+    raw = _collectWithDoc(doc, raw);
     return raw;
   }
-}
-
-String collectMethods(List<MethodSpec> methods) {
-  return methods.map((o) => o.code()).join("\n\n");
 }

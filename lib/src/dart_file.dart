@@ -6,7 +6,7 @@ import 'package:xfile/xfile.dart';
 class DartFile {
   FileSpec fileSpec;
 
-  String get _content => format(fileSpec?.code(args: {KEY_REVERSE_CLASSES: true}));
+  String get _content => format(fileSpec?.code({KEY_REVERSE_CLASSES: true}));
 
   DartFile.empty();
 
