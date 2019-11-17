@@ -10,17 +10,22 @@ abstract class MethodSpec extends Spec {
 
 class _MethodSpecImpl extends MethodSpec {
   DocumentSpec get document => _childWhereType<DocumentSpec>();
+
   List<AnnotationSpec> get annotations => _childrenWhereType<AnnotationSpec>();
+
   List<ParameterSpec> get parameters => _childrenWhereType<ParameterSpec>();
 
   TypeToken returnType;
   String _methodName;
+
   set methodName(String name) => _methodName = name;
+
   String get methodName => _methodName;
 
   List<TypeToken> genericTypes = [];
   CodeBlockSpec codeBlock;
   bool isStatic;
+
   bool get hasGenericType => genericTypes.isNotEmpty;
 
   @override
@@ -48,11 +53,16 @@ class _MethodSpecImpl extends MethodSpec {
   @override
   CodeWriter code() {
     CodeWriter codeWriter = CodeWriter();
-    if (isStatic) {
-      if (!isTopLevel) {
-        codeWriter.write("static ");
-      }
-    }
+    codeWriter
+        .beginFragments()
+        .putIf(isStatic && !isTopLevel, "static")
+        .putIf(returnType != null, returnType.fullTypeName)
+        .put(methodName)
+        .commit()
+        .addCodeIf(genericTypes.isNotEmpty, "<${genericTypes.map((type) => type.fullTypeName).join(", ")}>")
+        .addCode("(${_collectParameters(parameters)})")
+        .beginClosure()
+        .endClosure();
 
     return codeWriter;
   }
