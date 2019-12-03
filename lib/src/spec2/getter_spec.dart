@@ -1,6 +1,6 @@
 part of 'spec.dart';
 
-class GetterSpec implements Spec {
+class GetterSpec extends Spec {
   DocumentSpec doc;
   TypeToken type;
   String getterName;
@@ -17,7 +17,7 @@ class GetterSpec implements Spec {
     });
 
   @override
-  String code([Map<String, dynamic> args = const {}]) {
+  String code() {
     String raw = '';
     if (type == null) {
       raw += 'get $getterName ${_collectCodeBlock(codeBlock)}';

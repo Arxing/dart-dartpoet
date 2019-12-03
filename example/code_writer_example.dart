@@ -1,8 +1,6 @@
-import 'package:dartpoet/src/code_writer.dart';
+import 'package:dartpoet/src/code_writer/code_writer.dart';
+import 'package:dartpoet/src/spec2/method_spec.dart';
 
-void main(){
-  CodeWriter codeWriter = CodeWriter();
+void main() {
 
-  var r = codeWriter.beginFragments().put("static").put("class").put("Output").commit().output();
-  print(r);
 }

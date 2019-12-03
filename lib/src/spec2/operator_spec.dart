@@ -1,6 +1,6 @@
 part of 'spec.dart';
 
-class OperatorSpec implements Spec {
+class OperatorSpec extends Spec {
   String operator;
   TypeToken returnType;
   List<ParameterSpec> parameters = [];
@@ -12,7 +12,7 @@ class OperatorSpec implements Spec {
   OperatorSpec.build(this.operator, this.returnType, this.parameters, this.codeBlock);
 
   @override
-  String code([Map<String, dynamic> args = const {}]) {
+  String code() {
     return "${returnType.fullTypeName} operator $operator(${_collectParameters(parameters)})${_collectCodeBlock(codeBlock)}";
   }
 }

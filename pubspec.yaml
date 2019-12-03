@@ -13,5 +13,6 @@ dependencies:
   xfile: ^1.0.2
   dart_style: 1.2.9
   type_token: ^1.0.2
+  uuid: ^2.0.4
 
 dev_dependencies:

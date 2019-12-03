@@ -1,6 +1,6 @@
 part of 'spec.dart';
 
-class DocumentSpec implements Spec {
+class DocumentSpec extends Spec {
   String content;
 
   @override
@@ -9,7 +9,11 @@ class DocumentSpec implements Spec {
   DocumentSpec.text(this.content);
 
   @override
-  String code([Map<String, dynamic> args = const {}]) {
+  String code() {
     return '/// $content';
   }
+
+  @override
+  // TODO: implement supportedChildKinds
+  List<SpecKind> get supportedChildKinds => null;
 }

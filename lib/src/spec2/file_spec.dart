@@ -35,7 +35,7 @@ class FileSpec extends Spec {
   }
 
   @override
-  String code([Map<String, dynamic> args = const {}]) {
+  String code() {
     bool reverseClasses = args[KEY_REVERSE_CLASSES] ?? false;
     if (reverseClasses) classes = classes.reversed.toList();
     StringBuffer inner = StringBuffer();

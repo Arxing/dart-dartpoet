@@ -26,7 +26,7 @@ class CodeBlockSpec extends Spec {
   void addLines(List<String> lines) => lines.forEach((line) => addLine(line));
 
   @override
-  String code([Map<String, dynamic> args = const {}]) {
+  String code() {
     bool useExpressionBody = args[KEY_USE_EXPRESSION_BODY] ?? lines == 1;
     StringBuffer code = StringBuffer();
     if (lines == 1 && useExpressionBody) {

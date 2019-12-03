@@ -54,16 +54,20 @@ class _MethodSpecImpl extends MethodSpec {
   CodeWriter code() {
     CodeWriter codeWriter = CodeWriter();
     codeWriter
-        .beginFragments()
-        .putIf(isStatic && !isTopLevel, "static")
-        .putIf(returnType != null, returnType.fullTypeName)
+        .beginCode()
+        .beginSegments()
+        .doNextActionIf(isStatic && !isTopLevel)
+        .put("static")
+        .doNextActionIf(returnType != null)
+        .put(returnType.fullTypeName)
         .put(methodName)
         .commit()
-        .addCodeIf(genericTypes.isNotEmpty, "<${genericTypes.map((type) => type.fullTypeName).join(", ")}>")
+        .doNextActionIf(genericTypes.isNotEmpty)
+        .addCode("<${genericTypes.map((type) => type.fullTypeName).join(", ")}>")
         .addCode("(${_collectParameters(parameters)})")
         .beginClosure()
-        .endClosure();
-
+        .endClosure()
+        .commit();
     return codeWriter;
   }
 

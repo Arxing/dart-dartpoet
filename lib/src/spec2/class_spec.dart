@@ -110,7 +110,7 @@ class ClassSpec extends Spec {
         );
 
   @override
-  String code([Map<String, dynamic> args = const {}]) {
+  String code() {
     StringBuffer code = StringBuffer();
     // class name
     if (isMixin) {

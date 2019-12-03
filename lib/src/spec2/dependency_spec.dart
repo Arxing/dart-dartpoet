@@ -21,7 +21,7 @@ class DependencySpec extends Spec {
   DependencySpec.partOf(String route) : this.build(DependencyMode.partOf, route);
 
   @override
-  String code([Map<String, dynamic> args = const {}]) {
+  String code() {
     String raw = '';
     switch (mode) {
       case DependencyMode.import:

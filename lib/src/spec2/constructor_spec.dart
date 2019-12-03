@@ -1,6 +1,6 @@
 part of 'spec.dart';
 
-class ConstructorSpec implements Spec {
+class ConstructorSpec extends Spec {
   DocumentSpec doc;
 
   ClassSpec owner;
@@ -99,7 +99,7 @@ class ConstructorSpec implements Spec {
   String get _constructorName => owner.className;
 
   @override
-  String code([Map<String, dynamic> args = const {}]) {
+  String code() {
     String raw = '';
     switch (mode) {
       case ConstructorMode.normal:

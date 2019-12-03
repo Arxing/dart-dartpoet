@@ -1,6 +1,6 @@
 part of 'spec.dart';
 
-class AnnotationSpec implements Spec {
+class AnnotationSpec extends Spec {
   TypeToken typeToken;
   List<ParameterSpec> parameters = [];
   String instanceName;
@@ -21,7 +21,7 @@ class AnnotationSpec implements Spec {
   }
 
   @override
-  String code([Map<String, dynamic> args = const {}]) {
+  String code() {
     if (isInstance) {
       return "@$instanceName";
     } else {
@@ -30,4 +30,7 @@ class AnnotationSpec implements Spec {
       return "@${typeToken.fullTypeName}(${list.map((o) => o.code()).join(", ")})";
     }
   }
+
+  @override
+  List<SpecKind> get supportedChildKinds => [SpecKind.PARAMETER];
 }

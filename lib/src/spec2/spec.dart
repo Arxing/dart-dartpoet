@@ -74,5 +74,5 @@ abstract class Spec {
     if (children != null && children.isNotEmpty) children.forEach((o) => this._addChild(o));
   }
 
-  CodeWriter code();
+  String code();
 }
