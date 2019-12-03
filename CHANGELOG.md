@@ -47,3 +47,7 @@
 ## 1.0.6
 
 - detach `TypeToken` to a independent library
+
+## 1.0.6+1
+
+- classes now support "abstract"
