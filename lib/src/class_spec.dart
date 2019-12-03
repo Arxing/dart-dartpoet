@@ -29,6 +29,8 @@ class ClassSpec implements Spec {
 
   bool get hasGeneric => generics.isNotEmpty;
 
+  bool isAbstract;
+
   ClassSpec.build(
     this.className, {
     this.doc,
@@ -42,6 +44,7 @@ class ClassSpec implements Spec {
     this.mixinClasses,
     this.generics,
     this.operatorMethods,
+    this.isAbstract = false,
     Iterable<ConstructorSpec> Function(ClassSpec owner) constructorBuilder,
   }) {
     if (constructorBuilder != null) constructors.addAll(constructorBuilder(this));
@@ -59,6 +62,7 @@ class ClassSpec implements Spec {
   @override
   String code({Map<String, dynamic> args = const {}}) {
     StringBuffer inner = StringBuffer();
+    if (isAbstract) inner.write("abstract ");
     inner.write('class $className');
     if (hasGeneric) inner.write("<${generics.map((o) => o.fullTypeName).join(", ")}>");
     if (superClass != null) inner.write(' extends ${superClass}');
