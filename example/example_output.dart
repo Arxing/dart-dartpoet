@@ -11,6 +11,7 @@ class Student {
 /// hello! world!.
 @Object()
 @deprecated
+@JsonKey("aa1234", ignored: false)
 class HelloWorld extends Object {
   List<Student> students = [];
   Map<String, int> studentScores = {"John": 100, "Rek": 50};
@@ -20,7 +21,7 @@ class HelloWorld extends Object {
 
   set newStudent(Student student) => students.add(student);
 
-  sayHello() => print('hello');
+  sayHello() async => print('hello');
 }
 
 globalFunc1(int param1) => print('hello world!');

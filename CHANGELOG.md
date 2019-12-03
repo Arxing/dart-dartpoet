@@ -51,3 +51,7 @@
 ## 1.0.6+1
 
 - classes now support "abstract"
+
+## 1.0.6+2
+
+- methods now support "abstract" and "asynchronous"

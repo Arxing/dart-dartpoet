@@ -50,7 +50,8 @@ main() {
         doc: DocSpec.text('hello! world!.'),
         superClass: TypeToken.of(Object),
         methods: [
-          MethodSpec.build('sayHello', codeBlock: CodeBlockSpec.line('print(\'hello\');')),
+          MethodSpec.build('sayHello', codeBlock: CodeBlockSpec.line('print(\'hello\');'), isAbstract: false, asynchronousMode:
+          AsynchronousMode.asyncFuture),
         ],
         properties: [
           PropertySpec.of('students', type: TypeToken.ofListByToken(TypeToken.ofName('Student')), defaultValue: []),

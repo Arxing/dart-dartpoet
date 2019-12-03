@@ -9,8 +9,10 @@ class MethodSpec implements Spec {
   CodeBlockSpec codeBlock;
   bool isStatic;
   bool isFactory;
+  bool isAbstract;
   List<TypeToken> generics = [];
   bool get hasGeneric => generics.isNotEmpty;
+  AsynchronousMode asynchronousMode;
 
   MethodSpec.build(
     this.methodName, {
@@ -21,6 +23,8 @@ class MethodSpec implements Spec {
     this.codeBlock,
     this.isStatic = false,
     this.isFactory = false,
+    this.isAbstract = false,
+    this.asynchronousMode = AsynchronousMode.none,
     this.generics,
   }) {
     if (metas == null) metas = [];
@@ -39,7 +43,24 @@ class MethodSpec implements Spec {
     if (hasGeneric) elements.add("<${generics.join(", ")}>");
     raw += elements.join(' ');
     raw += '(${collectParameters(parameters)})';
-    raw += ' ' + collectCodeBlock(codeBlock, withLambda: true);
+    if (isAbstract) {
+      raw += ';';
+    } else {
+      switch (asynchronousMode) {
+        case AsynchronousMode.none:
+          break;
+        case AsynchronousMode.asyncFuture:
+          raw += ' async';
+          break;
+        case AsynchronousMode.asyncStream:
+          raw += ' async*';
+          break;
+        case AsynchronousMode.syncIterable:
+          raw += ' sync*';
+          break;
+      }
+      raw += ' ' + collectCodeBlock(codeBlock, withLambda: true);
+    }
     raw = collectWithMeta(metas, raw);
     raw = collectWithDoc(doc, raw);
     return raw;
@@ -48,4 +69,11 @@ class MethodSpec implements Spec {
 
 String collectMethods(List<MethodSpec> methods) {
   return methods.map((o) => o.code()).join("\n\n");
+}
+
+enum AsynchronousMode {
+  none,
+  asyncFuture,
+  asyncStream,
+  syncIterable,
 }
