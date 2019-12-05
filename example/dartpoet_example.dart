@@ -5,17 +5,17 @@ main() {
   FileSpec fileSpec = FileSpec.build(
     dependencies: [
       DependencySpec.import('dart:convert'),
-    ],
-    // define methods in this file
+    ], // define methods in this file
     methods: [
       // define method1
       MethodSpec.build(
-        'globalFunc1',
-        // define parameters in this method
+        'globalFunc1', // define parameters in this method
         parameters: [
-          ParameterSpec.normal('param1', type: TypeToken.ofInt()),
-        ],
-        // define code block spec in this method
+          ParameterSpec.normal('param1', type: TypeToken.ofInt(), metas: [
+            MetaSpec.ofInstance("override"),
+            MetaSpec.ofInstance("override2"),
+          ]),
+        ], // define code block spec in this method
         codeBlock: CodeBlockSpec.line('print(\'hello world!\');'),
       ),
     ],
@@ -50,8 +50,10 @@ main() {
         doc: DocSpec.text('hello! world!.'),
         superClass: TypeToken.of(Object),
         methods: [
-          MethodSpec.build('sayHello', codeBlock: CodeBlockSpec.line('print(\'hello\');'), isAbstract: false, asynchronousMode:
-          AsynchronousMode.asyncFuture),
+          MethodSpec.build('sayHello',
+              codeBlock: CodeBlockSpec.line('print(\'hello\');'),
+              isAbstract: false,
+              asynchronousMode: AsynchronousMode.asyncFuture),
         ],
         properties: [
           PropertySpec.of('students', type: TypeToken.ofListByToken(TypeToken.ofName('Student')), defaultValue: []),

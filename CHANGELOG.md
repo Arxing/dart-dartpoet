@@ -55,3 +55,7 @@
 ## 1.0.6+2
 
 - methods now support "abstract" and "asynchronous"
+
+## 1.0.6+3
+
+- bug fixed for issue-#3

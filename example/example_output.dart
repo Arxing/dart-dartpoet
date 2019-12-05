@@ -24,4 +24,4 @@ class HelloWorld extends Object {
   sayHello() async => print('hello');
 }
 
-globalFunc1(int param1) => print('hello world!');
+globalFunc1(@override @override2 int param1) => print('hello world!');

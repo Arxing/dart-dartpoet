@@ -101,7 +101,13 @@ class ParameterSpec<T> implements Spec {
       raw = parameterMode == ParameterMode.named ? "$parameterName: ${_valueString(value)}" : "${_valueString(value)}";
     } else {
       bool withDefValue = args[KEY_WITH_DEF_VALUE] ?? false;
-      raw = isSelfParameter ? 'this.$parameterName' : '${_getType()} $parameterName';
+      if (isSelfParameter) {
+        raw = "this.$parameterName";
+      } else {
+        raw = "";
+        if (metas.isNotEmpty) raw += "${collectMetas(metas)} ";
+        raw += "${_getType()} $parameterName";
+      }
       if (withDefValue && defaultValue != null) raw += '=$defaultValue';
     }
     return raw;
@@ -116,7 +122,8 @@ String collectParameters(List<ParameterSpec> parameters) {
   List<String> paramsList = [];
   if (normalList.isNotEmpty) paramsList.add(normalList.map((o) => o.code()).join(", "));
   if (namedList.isNotEmpty) paramsList.add('{' + namedList.map((o) => o.code(args: {KEY_WITH_DEF_VALUE: true})).join(", ") + '}');
-  if (indexedList.isNotEmpty) paramsList.add('[' + indexedList.map((o) => o.code(args: {KEY_WITH_DEF_VALUE: true})).join(", ") + ']');
+  if (indexedList.isNotEmpty)
+    paramsList.add('[' + indexedList.map((o) => o.code(args: {KEY_WITH_DEF_VALUE: true})).join(", ") + ']');
   return paramsList.join(", ");
 }
 
